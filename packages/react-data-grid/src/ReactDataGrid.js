@@ -734,6 +734,14 @@ const ReactDataGrid = createReactClass({
         height: this.props.headerFiltersHeight,
         rowType: 'filter'
       });
+      rows.push({
+        ref: (node) => this.filterRow = node,
+        filterable: true,
+        onFilterChange: this.props.onAddFilter,
+        height: this.props.headerFiltersHeight,
+        rowType: 'filter',
+        teste: 'teste'
+      });
     }
     return rows;
   },
