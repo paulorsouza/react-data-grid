@@ -75,6 +75,7 @@ const HeaderRow = createReactClass({
   },
 
   getFilterableHeaderCell(column) {
+    console.log('teste');
     let FilterRenderer = FilterableHeaderCell;
     if (column.filterRenderer !== undefined) {
       FilterRenderer = column.filterRenderer;
