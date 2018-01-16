@@ -6,6 +6,7 @@ const Viewport             = require('./Viewport');
 const GridScrollMixin      = require('./GridScrollMixin');
 const DOMMetrics           = require('./DOMMetrics');
 const cellMetaDataShape    = require('./PropTypeShapes/CellMetaDataShape');
+import Footer from './Footer';
 require('../../../themes/react-data-grid-core.css');
 
 const Grid = createReactClass({
@@ -91,64 +92,77 @@ const Grid = createReactClass({
     let EmptyRowsView = this.props.emptyRowsView;
 
     return (
-      <div style={this.getStyle()} className="react-grid-Grid">
-        <Header
-          ref={(input) => { this.header = input; } }
-          columnMetrics={this.props.columnMetrics}
-          onColumnResize={this.props.onColumnResize}
-          height={this.props.rowHeight}
-          totalWidth={this.props.totalWidth}
-          headerRows={headerRows}
-          sortColumn={this.props.sortColumn}
-          sortDirection={this.props.sortDirection}
-          draggableHeaderCell={this.props.draggableHeaderCell}
-          onSort={this.props.onSort}
-          onHeaderDrop={this.props.onHeaderDrop}
-          onScroll={this.onHeaderScroll}
-          getValidFilterValues={this.props.getValidFilterValues}
-          cellMetaData={this.props.cellMetaData}
+      <div>
+        <div style={this.getStyle()} className="react-grid-Grid">
+          <Header
+            ref={(input) => { this.header = input; } }
+            columnMetrics={this.props.columnMetrics}
+            onColumnResize={this.props.onColumnResize}
+            height={this.props.rowHeight}
+            totalWidth={this.props.totalWidth}
+            headerRows={headerRows}
+            sortColumn={this.props.sortColumn}
+            sortDirection={this.props.sortDirection}
+            draggableHeaderCell={this.props.draggableHeaderCell}
+            onSort={this.props.onSort}
+            onHeaderDrop={this.props.onHeaderDrop}
+            onScroll={this.onHeaderScroll}
+            getValidFilterValues={this.props.getValidFilterValues}
+            cellMetaData={this.props.cellMetaData}
           />
-          {this.props.rowsCount >= 1 || (this.props.rowsCount === 0 && !this.props.emptyRowsView) ?
-            <div
-              ref={(node) => { this.viewPortContainer = node; } }
-              tabIndex={this.props.tabIndex}
-              onKeyDown={this.props.onViewportKeydown}
-              onKeyUp={this.props.onViewportKeyup}
-              onClick={this.props.onViewportClick}
-              onDoubleClick={this.props.onViewportDoubleClick}
-              onDragStart={this.props.onViewportDragStart}
-              onDragEnd={this.props.onViewportDragEnd}>
-                <Viewport
-                  ref={(node) => { this.viewport = node; } }
-                  rowKey={this.props.rowKey}
-                  width={this.props.columnMetrics.width}
-                  rowHeight={this.props.rowHeight}
-                  rowRenderer={this.props.rowRenderer}
-                  rowGetter={this.props.rowGetter}
-                  rowsCount={this.props.rowsCount}
-                  selectedRows={this.props.selectedRows}
-                  expandedRows={this.props.expandedRows}
-                  columnMetrics={this.props.columnMetrics}
-                  totalWidth={this.props.totalWidth}
-                  onScroll={this.onScroll}
-                  onRows={this.props.onRows}
-                  cellMetaData={this.props.cellMetaData}
-                  rowOffsetHeight={this.props.rowOffsetHeight || this.props.rowHeight * headerRows.length}
-                  minHeight={this.props.minHeight}
-                  rowScrollTimeout={this.props.rowScrollTimeout}
-                  scrollToRowIndex={this.props.scrollToRowIndex}
-                  contextMenu={this.props.contextMenu}
-                  rowSelection={this.props.rowSelection}
-                  getSubRowDetails={this.props.getSubRowDetails}
-                  rowGroupRenderer={this.props.rowGroupRenderer}
-                  overScan={this.props.overScan}
-                />
-            </div>
-        :
-            <div ref={(node) => { this.emptyView = node; } } className="react-grid-Empty">
-                <EmptyRowsView />
-            </div>
-        }
+            {this.props.rowsCount >= 1 || (this.props.rowsCount === 0 && !this.props.emptyRowsView) ?
+              <div
+                ref={(node) => { this.viewPortContainer = node; } }
+                tabIndex={this.props.tabIndex}
+                onKeyDown={this.props.onViewportKeydown}
+                onKeyUp={this.props.onViewportKeyup}
+                onClick={this.props.onViewportClick}
+                onDoubleClick={this.props.onViewportDoubleClick}
+                onDragStart={this.props.onViewportDragStart}
+                onDragEnd={this.props.onViewportDragEnd}>
+                  <Viewport
+                    ref={(node) => { this.viewport = node; } }
+                    rowKey={this.props.rowKey}
+                    width={this.props.columnMetrics.width}
+                    rowHeight={this.props.rowHeight}
+                    rowRenderer={this.props.rowRenderer}
+                    rowGetter={this.props.rowGetter}
+                    rowsCount={this.props.rowsCount}
+                    selectedRows={this.props.selectedRows}
+                    expandedRows={this.props.expandedRows}
+                    columnMetrics={this.props.columnMetrics}
+                    totalWidth={this.props.totalWidth}
+                    onScroll={this.onScroll}
+                    onRows={this.props.onRows}
+                    cellMetaData={this.props.cellMetaData}
+                    rowOffsetHeight={(this.props.rowOffsetHeight || this.props.rowHeight * headerRows.length) + 35}
+                    minHeight={this.props.minHeight}
+                    rowScrollTimeout={this.props.rowScrollTimeout}
+                    scrollToRowIndex={this.props.scrollToRowIndex}
+                    contextMenu={this.props.contextMenu}
+                    rowSelection={this.props.rowSelection}
+                    getSubRowDetails={this.props.getSubRowDetails}
+                    rowGroupRenderer={this.props.rowGroupRenderer}
+                    overScan={this.props.overScan}
+                  />
+              </div>
+          :
+              <div ref={(node) => { this.emptyView = node; } } className="react-grid-Empty">
+                  <EmptyRowsView />
+              </div>
+          }
+          <Footer
+            ref={(node) => { this.footer = node; } }
+            columnMetrics={this.props.columnMetrics}
+            onColumnResize={this.props.onColumnResize}
+            height={this.props.rowHeight}
+            totalWidth={this.props.totalWidth}
+            cellMetaData={this.props.cellMetaData}
+            rowGetter={this.props.rowGetter}
+            rowsCount={this.props.rowsCount}
+            onScroll={this.onScroll}
+          />
+        </div>
       </div>
     );
   }

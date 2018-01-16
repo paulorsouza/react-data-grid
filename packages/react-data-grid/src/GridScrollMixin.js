@@ -43,6 +43,9 @@ module.exports = {
       if (this.viewport) {
         this.viewport.setScrollLeft(this._scrollLeft);
       }
+      if (this.footer) {
+        this.footer.setScrollLeft(this._scrollLeft);
+      }
     }
   }
 };

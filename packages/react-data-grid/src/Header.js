@@ -124,7 +124,7 @@ class Header extends React.Component {
         onSort={this.props.onSort}
         onScroll={this.props.onScroll}
         getValidFilterValues={this.props.getValidFilterValues}
-        />);
+      />);
     });
     return headerRows;
   };
