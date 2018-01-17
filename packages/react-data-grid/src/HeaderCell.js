@@ -64,7 +64,7 @@ class HeaderCell extends React.Component {
       }
       return React.cloneElement(this.props.renderer, {column: this.props.column, height: this.props.height});
     }
-    return this.props.renderer({column: this.props.column});
+    return this.props.renderer(this.props);
   };
 
   getStyle = (): {width:number; left: number; display: string; position: string; overflow: string; height: number; margin: number; textOverflow: string; whiteSpace: string } => {

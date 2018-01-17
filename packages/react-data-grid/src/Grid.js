@@ -109,6 +109,7 @@ const Grid = createReactClass({
             onScroll={this.onHeaderScroll}
             getValidFilterValues={this.props.getValidFilterValues}
             cellMetaData={this.props.cellMetaData}
+            headerRenderer={this.props.headerRenderer}
           />
             {this.props.rowsCount >= 1 || (this.props.rowsCount === 0 && !this.props.emptyRowsView) ?
               <div
