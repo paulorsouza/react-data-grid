@@ -8,12 +8,12 @@ import getScrollbarSize  from'./getScrollbarSize';
 import PropTypes from 'prop-types';
 import createObjectWithProperties from'./createObjectWithProperties';
 import cellMetaDataShape from './PropTypeShapes/CellMetaDataShape';
-import FooterRow from './FooterRow';
+import SummaryRow from './SummaryRow';
 
-// The list of the propTypes that we want to include in the Footer div
+// The list of the propTypes that we want to include in the Summary div
 const knownDivPropertyKeys = ['height', 'onScroll'];
 
-class Footer extends Component {
+class Summary extends Component {
   static propTypes = {
     columnMetrics: PropTypes.shape({  width: PropTypes.number.isRequired, columns: PropTypes.any }).isRequired,
     totalWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -27,14 +27,6 @@ class Footer extends Component {
 
   componentWillReceiveProps() {
     this.setState({resizing: null});
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    // let update =  !(ColumnMetrics.sameColumns(this.props.columnMetrics.columns, nextProps.columnMetrics.columns, ColumnMetrics.sameColumn))
-    // || this.props.totalWidth !== nextProps.totalWidth
-    // || (this.state.resizing !== nextState.resizing);
-    // return update;
-    return true;
   }
 
   onColumnResize = (column, width) => {
@@ -66,17 +58,16 @@ class Footer extends Component {
     }
   };
 
-  getFooterRows = (): Array<HeaderRow> => {
+  getSummaryRow = (): Array<SummaryRow> => {
     let columnMetrics = this.getColumnMetrics();
     let resizeColumn;
     if (this.state.resizing) {
       resizeColumn = this.state.resizing.column;
     }
-    let footerRows = [];
     let rowHeight = 'auto';
     let scrollbarSize = getScrollbarSize() > 0 ? getScrollbarSize() : 0;
     let updatedWidth = isNaN(this.props.totalWidth - scrollbarSize) ? this.props.totalWidth : this.props.totalWidth - scrollbarSize;
-    let footerRowStyle = {
+    let summaryRowStyle = {
       position: 'absolute',
       left: 0,
       bottom: 0,
@@ -85,9 +76,9 @@ class Footer extends Component {
       minHeight: rowHeight
     };
 
-    footerRows.push(<FooterRow
-      ref={(node) => this.footerRow = node}
-      style={footerRowStyle}
+    return (<SummaryRow
+      ref={(node) => this.summaryRow = node}
+      style={summaryRowStyle}
       onColumnResize={this.onColumnResize}
       onColumnResizeEnd={this.onColumnResizeEnd}
       width={columnMetrics.width}
@@ -98,8 +89,6 @@ class Footer extends Component {
       rowGetter={this.props.rowGetter}
       rowsCount={this.props.rowsCount}
     />);
-
-    return footerRows;
   };
 
   getColumnMetrics = () => {
@@ -131,9 +120,9 @@ class Footer extends Component {
   };
 
   setScrollLeft = (scrollLeft: number) => {
-    let node = ReactDOM.findDOMNode(this.footerRow);
+    let node = ReactDOM.findDOMNode(this.summaryRow);
     node.scrollLeft = scrollLeft;
-    this.footerRow.setScrollLeft(scrollLeft);
+    this.summaryRow.setScrollLeft(scrollLeft);
   };
 
   getKnownDivProps = () => {
@@ -145,14 +134,13 @@ class Footer extends Component {
       'react-grid-Header': true,
       'react-grid-Header--resizing': !!this.state.resizing
     });
-    let footerRows = this.getFooterRows();
 
     return (
       <div {...this.getKnownDivProps()} style={this.getStyle()} className={className}>
-        {footerRows}
+        {this.getSummaryRow()}
       </div>
     );
   }
 }
 
-export default Footer;
+export default Summary;

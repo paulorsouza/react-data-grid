@@ -7,11 +7,11 @@ import ResizeHandle from './ResizeHandle';
 
 const simpleCellRenderer = () => {
   return (
-    <div className="widget-HeaderCell__value">{10000}</div>
+    <div className="widget-HeaderCell__value"></div>
   );
 };
 
-class FooterCell extends Component {
+class SummaryCell extends Component {
   static propTypes = {
     renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.element]).isRequired,
     column: PropTypes.shape(ExcelColumn).isRequired,
@@ -87,4 +87,4 @@ class FooterCell extends Component {
   }
 }
 
-export default FooterCell;
+export default SummaryCell;

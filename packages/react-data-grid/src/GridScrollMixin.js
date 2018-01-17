@@ -43,8 +43,8 @@ module.exports = {
       if (this.viewport) {
         this.viewport.setScrollLeft(this._scrollLeft);
       }
-      if (this.footer) {
-        this.footer.setScrollLeft(this._scrollLeft);
+      if (this.summary) {
+        this.summary.setScrollLeft(this._scrollLeft);
       }
     }
   }

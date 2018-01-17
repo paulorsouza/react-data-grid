@@ -1,17 +1,14 @@
-import React, { Component } from 'react';
-import shallowEqual from 'fbjs/lib/shallowEqual';
-import BaseFooterCell from './FooterCell';
+import React from 'react';
+import BaseSummaryCell from './SummaryCell';
 import ColumnUtilsMixin from'./ColumnUtils';
-import PropTypes from 'prop-types';
 import createObjectWithProperties from './createObjectWithProperties';
-import ExcelColumn from './PropTypeShapes/ExcelColumn';
 import getScrollbarSize from './getScrollbarSize';
 const createReactClass = require('create-react-class');
 const ScrollShim = require('./ScrollShim');
 
 const knownDivPropertyKeys = ['width', 'height', 'style', 'onScroll'];
 
-const FooterRow = createReactClass({
+const SummaryRow = createReactClass({
   mixins: [ColumnUtilsMixin, ScrollShim],
 
   componentWillMount() {
@@ -57,7 +54,7 @@ const FooterRow = createReactClass({
       const renderer = this.getRenderer(column);
 
       const cell = (
-        <BaseFooterCell
+        <BaseSummaryCell
           ref={(node) => this.cells[idx] = node}
           key={idx}
           height={this.props.height}
@@ -105,7 +102,6 @@ const FooterRow = createReactClass({
 
     let cells = this.getCells();
     return (
-      
       <div
         {...this.getKnownDivProps()}
         className="react-grid-HeaderRow"
@@ -119,4 +115,4 @@ const FooterRow = createReactClass({
   }
 });
 
-export default FooterRow;
+export default SummaryRow;

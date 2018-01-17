@@ -123,7 +123,8 @@ const ReactDataGrid = createReactClass({
     onAddSubRow: PropTypes.func,
     enableCellAutoFocus: PropTypes.bool,
     onBeforeEdit: PropTypes.func,
-    selectAllRenderer: PropTypes.object
+    selectAllRenderer: PropTypes.object,
+    enableSummary: PropTypes.bool
   },
 
   getDefaultProps(): {enableCellSelect: boolean} {
@@ -138,6 +139,7 @@ const ReactDataGrid = createReactClass({
       rowScrollTimeout: 0,
       scrollToRowIndex: 0,
       cellNavigationMode: 'none',
+      enableSummary: false,
       overScan: {
         colsStart: 5,
         colsEnd: 5,
@@ -731,12 +733,9 @@ const ReactDataGrid = createReactClass({
       rowType: 'header'
     };
     if (this.props.headerRenderer) {
-      header = { ...header,
-        onFilterChange: this.props.onAddFilter,
-        filterable: true
-      };
+      header = Object.assign(header, {onFilterChange: this.props.onAddFilter, filterable: true});
     }
-    const rows = [{ ...header }];
+    const rows = [header];
     if (this.state.canFilter === true) {
       rows.push({
         ref: (node) => this.filterRow = node,
