@@ -43,7 +43,8 @@ class HeaderRow extends React.Component {
     onScroll: PropTypes.func,
     rowType: PropTypes.string,
     draggableHeaderCell: PropTypes.func,
-    onHeaderDrop: PropTypes.func
+    onHeaderDrop: PropTypes.func,
+    headerRenderer: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
   };
 
   componentWillMount() {
@@ -64,6 +65,10 @@ class HeaderRow extends React.Component {
   }
 
   getHeaderCellType = (column) => {
+    if (this.props.headerRenderer) {
+      return HeaderCellType.CUSTOM;
+    }
+
     if (column.filterable) {
       if (this.props.filterable) return HeaderCellType.FILTERABLE;
     }
@@ -72,6 +77,18 @@ class HeaderRow extends React.Component {
 
     return HeaderCellType.NONE;
   };
+
+  getCustomHeaderCell(column) {
+    const sortDirection = (this.props.sortColumn === column.key) ?
+      this.props.sortDirection : SortableHeaderCell.DEFINE_SORT.NONE;
+    const HeaderRenderer = this.props.headerRenderer;
+    return (<HeaderRenderer
+      {...this.props}
+      onChange={this.props.onFilterChange}
+      onSort={this.props.onSort}
+      sortDirection={sortDirection}
+    />);
+  }
 
   getFilterableHeaderCell = (column) => {
     let FilterRenderer = FilterableHeaderCell;
@@ -99,6 +116,9 @@ class HeaderRow extends React.Component {
         break;
       case HeaderCellType.FILTERABLE:
         renderer = this.getFilterableHeaderCell(column);
+        break;
+      case HeaderCellType.CUSTOM:
+        renderer = this.getCustomHeaderCell(column);
         break;
       default:
         break;

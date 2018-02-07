@@ -61,7 +61,8 @@ class Grid extends React.Component {
     getValidFilterValues: PropTypes.func,
     rowGroupRenderer: PropTypes.func,
     overScan: PropTypes.object,
-    enableSummary: PropTypes.bool
+    enableSummary: PropTypes.bool,
+    headerRenderer: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
   };
 
   static defaultProps = {
@@ -149,6 +150,7 @@ class Grid extends React.Component {
           onScroll={this.onHeaderScroll}
           getValidFilterValues={this.props.getValidFilterValues}
           cellMetaData={this.props.cellMetaData}
+          headerRenderer={this.props.headerRenderer}
           />
           {this.props.rowsCount >= 1 || (this.props.rowsCount === 0 && !this.props.emptyRowsView) ?
             <div
